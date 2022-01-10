@@ -11,7 +11,7 @@ here: [Example](https://tuprints.ulb.tu-darmstadt.de/18611/)
 
 ### Compilation
 
-Compile with `xlatexmk` (there is a  `.latexmkrc`):
+Compile with `latexmk` (there is a  `.latexmkrc`):
 ```bash
 latexmk thesis.tex -pdf
 ```
