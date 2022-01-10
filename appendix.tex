@@ -1,0 +1,26 @@
+%!TEX root = thesis.tex
+\chapter{Abbreviations}
+\vspace{-0.5cm}
+\begin{tcolorbox}[
+    enhanced,
+    enforce breakable,
+    check odd page,
+    toggle left and right,
+    grow to right by=\marginparwidth+\marginparsep-0.4cm,
+    toggle enlargement=evenpage,
+    notitle after break,
+    vfill before first,
+    nobeforeafter,
+    sharp corners,
+    top=0pt,
+    before upper={\let\clearpage\relax},
+    opacityback=0,
+    opacityframe=0,
+]
+
+\renewcommand{\glossarysection}[2][]{}  % no glossary title
+\printglossaries
+\end{tcolorbox}
+
+\chapter{Additional Data}
+\blindtext

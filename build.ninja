@@ -1,0 +1,5 @@
+rule latex
+  command = latexmk -pdf -interaction=nonstopmode $tex
+
+build thesis.pdf: latex abstract.tex acknowledgements.tex acronyms.tex appendix.tex biblio.tex config.tex frontpages.tex thesis.tex biblio.bib tufte-common.def tufte-book.cls
+  tex = thesis.tex

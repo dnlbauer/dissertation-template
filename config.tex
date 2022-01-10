@@ -1,0 +1,477 @@
+%!TEX root = thesis.tex
+
+\usepackage[english]{babel} % Load characters and hyphenation
+\usepackage{csquotes}  % English quotes mess with biblatex quotes
+\usepackage{ccicons}
+\usepackage{todonotes}
+\usepackage{blindtext}
+\usepackage{amsmath,amssymb}
+\usepackage{textgreek}
+\usepackage{tikz}
+\usepackage{tocloft}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{texshade}
+\usepackage{morefloats}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{hyphenat}
+\usepackage[most]{tcolorbox}
+\usepackage[noabbrev,nameinlink]{cleveref}
+
+% required for certain inkscape exports
+\usepackage{xcolor}
+
+\xspaceaddexceptions{]\}}
+
+\usetikzlibrary{shapes,arrows,shapes.multipart}
+
+
+\sisetup{separate-uncertainty,range-units=single,group-separator = {,}}
+
+% show a black bar when overfull 
+% \overfullrule=2cm  
+
+% nonbreaking namerefs
+% \AtBeginDocument{
+% \let\oldnameref\nameref
+% \renewcommand\nameref[1]{\ref{#1}~\oldnameref{#1}}
+% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Disable warnings                                           
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{silence}
+\WarningFilter{biblatex}{Patching footnotes}
+\WarningFilter{biblatex}{Name format 'last-first' deprecated}
+\WarningFilter{latex}{Marginpar on page}
+\WarningFilter{latexfont}{Font shape}
+\WarningFilter{latexfont}{Some font}
+\WarningFilter{latexfont}{Font shape}
+\WarningFilter{biblatex}{No driver for entry type 'software'}
+\WarningFilter{latex}{`!h' float specifier changed to `!ht'}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acronyms                                           
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[nogroupskip,nopostdot,acronym,style=super,nonumberlist,nohypertypes={acronym},automake]{glossaries}
+\renewcommand*{\glsnamefont}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fonts                                           
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fontspec}
+% \setmainfont{TeX Gyre Pagella}
+% \usepackage[libertine,cmintegrals,cmbraces,vvarbb]{newtxmath}
+% \setmainfont{ETBembo}[
+    % SmallCapsFont={Bembo Small Caps & Oldstyle Fig}
+% ]
+\setmainfont{Vollkorn}
+\setsansfont{Gillius ADF No2}
+% \setmonofont
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hyperlinks                                           
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{hyperrefcolor}{rgb}{0.2, 0.5, 0.8} % matches pymol slate
+\hypersetup{
+colorlinks, 
+allcolors=hyperrefcolor,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC Style                                             
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hide something from toc
+\newcommand{\changelocaltocdepth}[1]{%
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{#1}}%
+  \setcounter{tocdepth}{#1}%
+}
+
+% allows to specifically place chapters outside of parts
+\makeatletter
+\newcommand{\ChaptersOutsidePart}{%
+    \addtocontents{toc}{\bigskip}
+    \def\toclevel@chapter{-1}\def\toclevel@section{0}\def\toclevel@subsection{1}}
+\newcommand{\ChaptersInsidePart}{%
+    \def\toclevel@chapter{0}\def\toclevel@section{1}\def\toclevel@subsection{2}}
+\makeatother
+
+% TOC style
+\setlength{\cftbeforechapskip}{0pt}
+\setlength{\cftbeforepartskip}{10pt}
+\renewcommand\cftpartfont{\sc\bfseries}
+\renewcommand\cftchapfont{\small\sc}
+\renewcommand\cftsecfont{\small}
+\renewcommand\cftsubsecfont{\small}
+\renewcommand\cftsubsubsecfont{\small}
+
+% \renewcommand\cftpartafterpnum{\vspace{-10pt}}
+
+% Titles of TOC, LOF, LOT
+\renewcommand\cfttoctitlefont{\vspace{-2.5cm}\relax\huge\rmfamily}
+\renewcommand\cftaftertoctitle{\vspace{0.35em}}
+\renewcommand\cftloftitlefont{\vspace{-2.5cm}\relax\huge\rmfamily}
+\renewcommand\cftafterloftitle{\vspace{0.35em}}
+\renewcommand\cftlottitlefont{\relax\huge\rmfamily}
+\renewcommand\cftafterlottitle{\vspace{0.35em}}
+
+
+\hypersetup{linktocpage} % TOC link on page number
+
+\setcounter{tocdepth}{1} % number of sections in the toc
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% biblatex                                             
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyphenat} % required bc. biblatex uses \nohyphenations
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    maxnames=3,
+    minbibnames=6,
+    maxbibnames=6,
+    sorting=nyt,
+    isbn=false,
+    doi=true,
+    url=false,
+    backref,
+    giveninits=true, % initials for first names
+    uniquelist=true,
+    uniquename=init,
+    dashed=false, % do not use dashes for same author names
+]{biblatex}
+\addbibresource{biblio.bib}
+\addbibresource{publications.bib}
+
+% environment with supressed letters after the year for my reference section
+% https://tex.stackexchange.com/questions/63500/suppress-year-label-letter-in-biblatex-author-year-styles-on-a-per-bibliography
+\defbibenvironment{nodis}
+  {\list
+     {}
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{-\leftmargin}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}}
+  {\endlist}
+  {\clearfield{extradate}\item}
+
+
+% my papers section settings
+\DeclareRefcontext{mypaper}{sorting=none}
+
+% Reverse names for all authors
+\DeclareNameAlias{sortname}{last-first}
+
+% Make title in bibliography link to the doi
+\newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+% \DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+\DeclareFieldFormat{title}{\usebibmacro{string+doi}{#1}}
+\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{#1}}
+
+% newline after author (year)
+\DeclareDelimFormat[bib]{nametitledelim}{\newline\bibsentence}
+
+% spacing between entries
+\setlength\bibitemsep{1.5\itemsep}
+
+% Only years for dates
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
+
+% No pmid
+\AtEveryBibitem{\clearfield{eprint}}
+
+% No editors, translators, ...
+\renewbibmacro*{byeditor+others}{}
+
+% Supress the in: in references
+\renewbibmacro{in:}{}
+
+% Annotate authors
+% last name
+\renewcommand*{\mkbibnamefamily}[1]{
+\ifitemannotation{highlight}
+  {\textbf{#1}}%
+  {\ifitemannotation{highfirst}
+    {\textbf{#1}}%
+    {#1}%
+  }
+}%%
+% first name
+\renewcommand*{\mkbibnamegiven}[1]{
+\ifitemannotation{highlight}
+  {\textbf{#1}}%
+  {\ifitemannotation{highfirst}
+    {\textbf{#1}}%
+    {#1}
+  }%
+\ifitemannotation{first}
+  {*}
+  {\ifitemannotation{highfirst}
+    {\textbf{*}}
+    {}
+  }%
+}%%
+
+% backreference string
+\DefineBibliographyStrings{english}{%
+  backrefpage = {cited on p\adddot},%
+  backrefpages = {cited on pp\adddot}%
+}
+
+% no header for bibleography
+\defbibheading{secbib}[\bibname]{%
+  \section*{#1}%
+  \markboth{#1}{#1}}
+
+% marginnnote with a reduced citing format:
+% Authors (year), Title. Year links to bibliography
+\DeclareCiteCommand{\customcite}
+  {\boolfalse{citetracker}% precode
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex % loopcode (the actual formatting)
+     {\indexnames{labelname}%
+      \indexfield{indextitle}}
+     {}%
+   \printtext{%
+       \printnames{labelname}%
+       \setunit{\addspace}
+       \printtext[parens]{\printfield[bibhyperref]{year}}% year links to references
+       % \setunit{\labelnamepunct}%
+       % \printfield[citetitle]{labeltitle}%
+     }%
+   }
+  {\multicitedelim} % sepcode: a comma usually
+  {\usebibmacro{postnote}\printtext{\adddot}} % endcode: finish with a dot
+
+
+% marginnnote with a reduced citing format:
+% Authors (year), Title. Year links to bibliography
+\DeclareCiteCommand{\inlinecite}
+  {\boolfalse{citetracker}% precode
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex % loopcode (the actual formatting)
+     {\indexnames{labelname}%
+      \indexfield{indextitle}}
+     {}%
+   \printtext{%
+       \printnames{labelname}%
+       \setunit{\addspace}
+       \printtext[parens]{\printfield[bibhyperref]{year}}% year links to references
+       % \setunit{\labelnamepunct}%
+       % \printfield[citetitle]{labeltitle}%
+     }%
+   }
+  {\multicitedelim} % sepcode: a comma usually
+  {\usebibmacro{postnote}\printtext{}} % endcode: finish with a dot
+
+
+% normal citation -> margin
+\renewcommand{\cite}[2][0pt]{\sidenote[][#1]{\customcite{#2}}}
+% inline citation
+\newcommand{\icite}[2][]{\customcite[#1]{#2}}
+
+% explanation of a word/phrase
+\newcommand{\explanation}[2][0pt]{*\marginnote[#1]{*#2}}
+
+% easier sub and superscripts
+\newcommand{\sups}[1]{\textsuperscript{#1}}
+\newcommand{\subs}[1]{\textsubscript{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Utility functions                                         
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% include tex with embedded pdf
+\newcommand{\pdftex}[2][0.975\textwidth]{
+\scriptsize\sffamily\selectfont
+\def\svgwidth{#1}
+\input{#2}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% headings                                         
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% headline
+\newcommand\HUGE{\fontsize{26}{26}\selectfont}
+\newcommand\CHAPTERSIZE{\fontsize{16}{10}\selectfont}
+\titleformat{\chapter}%
+  [display]% shape
+  {\vspace{-2.5cm}\relax\begin{fullwidth}}% format applied to label+text
+  {\CHAPTERSIZE \rmfamily\scshape Chapter \thechapter}% label
+  {-1em}% horizontal separation between label and title body
+  {\HUGE\rmfamily}% before the title body
+  [\end{fullwidth}\vspace{-2em}]% after the title body
+
+% Indent for section number number
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titleformat{\section}%
+  [hang]% shape
+  {\normalfont\scshape}% format applied to label+text
+  {\thesection\hfill}
+  {1em}% horizontal separation between label and title body
+  {\normalfont\scshape}% before the title body
+  []% after the title body
+
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}  
+\titleformat{\subsection}%
+  [hang]% shape
+  {\normalfont\scshape}% format applied to label+text
+  {\thesubsection\hfill}% label
+  {1em}% horizontal separation between label and title body
+  {\normalfont}% before the title body
+  []% after the title body
+
+\titleformat{\paragraph}
+  [hang]
+  {\normalfont}
+  {\thesubsubsection} 
+  {0em}
+  {\normalfont}
+  [\vspace{-1em}]
+
+% number of sections that become a counter
+\setcounter{secnumdepth}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ref Names                                       
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\creflabelformat{equation}{#2\textup{#1}#3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page Style                                             
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% remove paragraph indentation
+\makeatletter
+% Paragraph indentation and separation for normal text
+\renewcommand{\@tufte@reset@par}{%
+  \setlength{\RaggedRightParindent}{0.0pc}%
+  \setlength{\JustifyingParindent}{0.0pc}%
+  \setlength{\parindent}{0pc}%
+  \setlength{\parskip}{\baselineskip}%
+}
+\@tufte@reset@par
+
+% Paragraph indentation and separation for marginal text
+\renewcommand{\@tufte@margin@par}{%
+  \setlength{\RaggedRightParindent}{0.0pc}%
+  \setlength{\JustifyingParindent}{0.0pc}%
+  \setlength{\parindent}{0.0pc}%
+  \setlength{\parskip}{10pt}%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Quick fix for xelatex (authors forgot it in tufte)
+% see https://tex.stackexchange.com/questions/200722/xetex-seems-to-break-headers-in-tufte-handout                                          
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifxetex
+  \renewcommand{\textls}[2][5]{%
+    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
+  }
+  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
+  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
+  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand{\fb}[1]{
+  \def\@fb{#1}
+}
+\newcommand{\university}[1]{
+  \def\@university{#1}
+}
+\newcommand{\refereeA}[1]{
+  \def\@refereeA{#1}
+}
+\newcommand{\refereeB}[1]{
+  \def\@refereeB{#1}
+}
+\newcommand{\location}[1]{
+  \def\@location{#1}
+}
+
+\usepackage{linegoal}% http://ctan.org/pkg/linegoal
+\usepackage{xparse}% http://ctan.org/pkg/xparse
+\NewDocumentCommand{\centerrule}{O{0.5ex} O{0.4pt}}{%
+  \leavevmode\rule[#1]{\linegoal}{#2}
+}
+
+\renewcommand{\maketitlepage}{
+\begin{fullwidth}
+\sffamily
+\centering
+{% top
+    \includegraphics[width=3.5cm]{athene}\\
+    \vspace{2pc}
+    \centerrule
+    \fontsize{24}{26}\selectfont\textcolor{darkgray}{\allcaps{\textrm{\thanklesstitle}}}\\
+    \centerrule
+}
+\vspace{1pc}
+\doublespacing
+{% center
+    \fontsize{14}{14}\selectfont
+    \par
+    dem Fachbereich \@fb\\
+    der \@university\\
+    \vspace{1.5pc}
+    zur Erlangung des Grades\\
+    Doctor rerum naturalium (Dr. rer. nat.)\\
+    \vspace{2pc}
+    vorgelegte Dissertation von\\
+    \vspace{1pc}
+    \Huge\selectfont\hspace{0.4cm}\textcolor{darkgray}{\allcaps{\textrm{\@author}}}
+}
+~\vfill
+{% bottom 
+\begin{tabular}{ll}
+\fontsize{14}{14}\selectfont\par\noindent{Erstgutachter:}  & \fontsize{14}{14}\selectfont\par\noindent{\@refereeA} \\
+\fontsize{14}{14}\selectfont\par\noindent{Zweitgutachter:} & \fontsize{14}{14}\selectfont\par\noindent{\@refereeB} \\
+\end{tabular}
+% \vspace{1pc}
+\fontsize{14}{14}\selectfont\par\noindent\allcaps{\@location~\the\year}
+}
+\end{fullwidth}
+\thispagestyle{empty}
+\clearpage
+}
+
+\newcommand{\plainsubtitle}{}
+\newcommand{\subtitle}[1]{%
+  \gdef\@subtitle{#1}%
+  \renewcommand{\plainsubtitle}{#1}% use provided plain-text title
+  \ifthenelse{\isundefined{\hypersetup}}%
+    {}% hyperref is not loaded; do nothing
+    {\hypersetup{pdftitle={\plaintitle: \plainsubtitle{}}}}% set the PDF metadata title
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My page style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+% pagestyle that does not print anything
+\fancypagestyle{nothing}{
+    \lhead{}
+    \fancyhead[LE]{}
+    \fancyhead[RO]{}
+}
+
+% no numbers on part pages
+\patchcmd{\part}{\thispagestyle{plain}}{\thispagestyle{empty}}
+  {}{\errmessage{Cannot patch \string\part}}
+\fancypagestyle{plain}{} 

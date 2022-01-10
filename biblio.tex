@@ -1,0 +1,52 @@
+%!TEX root = thesis.tex
+
+% This is how the bibliography looks like without treatment
+% Pretty ugly because there is a lot of wasted space
+%\bibliography{testbib}{}
+%\bibliographystyle{plain}
+
+
+% Try to eliminate margins by putting bibliography into a tcolorbox
+
+
+% \tcolorboxenvironment{thebibliography}{
+%   enhanced, 
+%   breakable, 
+%   check odd page, 
+%   toggle left and right, 
+%   grow to right by=\marginparwidth+\marginparsep, 
+%   toggle enlargement=evenpage, 
+%   notitle after break,
+%   nobeforeafter,
+%   sharp corners,
+%   top=0pt,
+%   before upper={\let\clearpage\relax},
+%   fontupper=\Huge}
+\chapter{References}
+\vspace{-0.5cm}
+\begin{tcolorbox}[
+    enhanced,
+    enforce breakable,
+    check odd page,
+    toggle left and right,
+    grow to right by=\marginparwidth+\marginparsep-0.4cm,
+    toggle enlargement=evenpage,
+    notitle after break,
+    vfill before first,
+    nobeforeafter,
+    sharp corners,
+    top=0pt,
+    left=0pt,
+    bottom=0pt,
+    right=0pt,
+    before upper={\let\clearpage\relax},
+    fontupper=\Huge,
+    opacityback=0,
+    opacityframe=0,
+]
+% \begin{thebibliography}
+% bibliography
+% \addcontentsline{toc}{chapter}{References}
+\printbibliography[heading=none] %bibintoc,title={References}]
+
+\end{tcolorbox}

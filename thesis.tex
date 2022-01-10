@@ -1,0 +1,183 @@
+% -*- Mode:TeX -*-
+%!TEX TS-program = xelatex
+%!TEX spellcheck = en-US
+\documentclass[a4paper,justified,titlepage,twoside,nobib,symmetric]{tufte-book}
+\usepackage{etoolbox}
+
+\include{config}
+
+\author[H. Wurst]{Hans Wurst}
+\title[Short thesis title]{Long thesis title}
+\subtitle{Thesis subtitle}
+\fb{Biologie}
+\university{Technischen Universit\"at Darmstadt}
+\refereeA{Prof. Dr. Musterprof}
+\refereeB{Prof. Dr. Musterprof2}
+\location{Darmstadt}
+
+\DeclareSIUnit\ions{ions}
+\DeclareSIUnit\molar{M}
+\DeclareSIUnit\millimolar{mM}
+\DeclareSIUnit\electrons{e\textsuperscript{-}}
+
+\include{acronyms}
+
+\begin{document}
+\sloppy
+
+% front 
+\frontmatter
+\changelocaltocdepth{-1} % hide from toc
+\pagenumbering{roman}
+\include{frontpages}
+\phantomsection
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\changelocaltocdepth{1}
+
+% % main text
+\mainmatter
+\pagenumbering{arabic}
+
+\chapter{Prologue}
+\marginnote{\begin{quote}
+\textit{"... Ion channels are involved in \mbox{every} thought, 
+every perception,
+every movement, every heartbeat."}\\
+\hspace*{\fill}- Clay M. Armstrong (1999)
+\end{quote}}
+
+\blindtext
+\section{Thesis Outline}
+\blindtext
+Finally, some text with citations here.\cite{Abraham2015,Alam2009}
+
+\section{Publications}
+The following thesis draws on the ideas and writing of the following published
+works. They are the result of my own research performed during my doctoral
+studies together with several coworkers and collaborators:
+\begin{refsection}
+\nocite{mypapermarini2018,mypaperporro2019,mypaperjenewein2020,mypaperhauf2020,mypaperschmidt2021,mypapersaponaro2021}
+\begin{refcontext}{mypaper}
+\vspace{-0.5cm}
+\printbibliography[keyword=mypaper,heading=none,env=nodis]
+\end{refcontext}
+\end{refsection}
+\begin{flushright}
+* indicates equal contribution.
+\end{flushright}
+
+\chapter{Introduction}
+\blindtext
+\begin{figure}
+\includegraphics[width=0.98\linewidth]{deadlines.png}
+\caption{Taken from \href{https://www.phdcomics.com}{phdcomics.com}.
+Here is an inline reference that has nothing to do with the graphic: \customcite{book:1314973}.}
+\end{figure}
+\section{Section 1}
+\blindtext
+\begin{marginfigure}
+\includegraphics[width=0.98\linewidth]{cat.jpg}
+\caption{A cat.}
+\end{marginfigure}
+\subsection{Subsection 1}
+\blindtext
+\subsection{Subsection 2}
+\blindtext
+
+\chapter{Results}
+\blindtext
+\section{Section 1}
+\blindtext
+\subsection{Subsection 1}
+\blindtext
+\subsection{Subsection 2}
+\blindtext
+
+\chapter{Discussion}
+\blindtext
+\section{Section 1}
+\blindtext
+\subsection{Subsection 1}
+\blindtext
+\subsection{Subsection 2}
+\blindtext
+
+
+\backmatter
+% bibliography
+\ChaptersOutsidePart
+\include{biblio}
+\ChaptersInsidePart
+
+\changelocaltocdepth{0}
+\begin{appendix}
+\part{Appendix}
+\chapter{Abbreviations}
+\vspace{-0.5cm}
+\begin{tcolorbox}[
+    enhanced,
+    enforce breakable,
+    check odd page,
+    toggle left and right,
+    grow to right by=\marginparwidth+\marginparsep-0.4cm,
+    toggle enlargement=evenpage,
+    notitle after break,
+    vfill before first,
+    nobeforeafter,
+    sharp corners,
+    top=0pt,
+    before upper={\let\clearpage\relax},
+    opacityback=0,
+    opacityframe=0,
+]
+
+\renewcommand{\glossarysection}[2][]{}  % no glossary title
+\printglossaries
+\end{tcolorbox}
+\chapter{Experimental details}
+\section*{How to build a flux compensator}
+\blindtext
+\section*{Some other Technical Stuff}
+\blindtext
+\blindtext
+\chapter{Additional data}
+\blindtext
+\end{appendix}
+
+
+% Thanks, CV, Erklärung
+\pagestyle{nothing}
+\ChaptersOutsidePart
+\begin{fullwidth}
+\include{acknowledgements}
+\chapter*{Ehrenwörtliche Erklärung} %Erklärung gemäß \S9(1) Promotionsordnung
+\addcontentsline{toc}{chapter}{Ehrenwörtliche Erklärung}
+
+Ich erkläre hiermit, dass ich die vorliegende Arbeit
+entsprechend den Regeln guter wissenschaftlicher Praxis selbstständig und ohne
+unzulässige Hilfe Dritter angefertigt habe.
+
+Sämtliche aus fremden Quellen direkt oder indirekt übernommenen Gedanken sowie
+sämtliche von Anderen direkt oder indirekt übernommenen Daten, Techniken und
+Materialien sind als solche kenntlich gemacht.
+Die Arbeit wurde bisher bei keiner anderen Hochschule zu Prüfungszwecken
+eingereicht.
+
+Die eingereichte elektronische Version stimmt mit der schriftlichen Version
+überein.
+
+\vspace{1cm}
+
+\par\noindent\rule{6cm}{0.4pt} \\
+\strut \footnotesize Datum und Unterschrift \\
+\end{fullwidth}
+\ChaptersInsidePart
+\end{document}
